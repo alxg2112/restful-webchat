@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Room</title>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script>
+        function getXmlHttp(){
+            var xmlhttp;
+            try {
+                xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (e) {
+                try {
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (E) {
+                    xmlhttp = false;
+                }
+            }
+            if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+                xmlhttp = new XMLHttpRequest();
+            }
+            return xmlhttp;
+        }
+//
+//        var req = createRequest(); // defined above
+//        // Create the callback:
+//        req.onreadystatechange = function() {
+//            if (req.readyState != 4) return; // Not there yet
+//            if (req.status != 200) {
+//                // Handle request failure here...
+//                alert("fail");
+//                return;
+//            }
+//            // Request successful, read the response
+//            var resp = req.responseText;
+//            // ... and use it as needed by your app.
+//        };
+
+        $(document).on("click", "#getMessage", function() {
+//                $.get("http://localhost:9998/chatserver/getmessage", function(responseText) {
+//                    alert(responseText);
+//                });
+//            req.open("GET", "http://localhost:9998/chatserver/getmessage", true);
+//            req.send();
+//            alert("sdg");
+            var xmlhttp = getXmlHttp();
+            xmlhttp.open('GET', 'http://localhost:9998/chatserver/', true);
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4) {
+                    if(xmlhttp.status == 200) {
+                        alert(xmlhttp.responseText);
+                    }
+                }
+            };
+            xmlhttp.send(null);
+        });
+    </script>
+</head>
+<body>
+<input id="getMessage" type="button" value="Test">
+<div id="messageDiv"></div>
+</body>
+</html>
